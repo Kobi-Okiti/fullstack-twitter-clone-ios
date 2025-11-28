@@ -21,11 +21,11 @@ struct TweetCellView: View {
                 VStack(alignment: .leading, spacing: 10,
                        content: {
                     (
-                        Text("Cam ")
+                        Text("Travis ")
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
                         +
-                        Text("@camoghenekobiruo")
+                        Text("@oghenekobiruo")
                             .foregroundColor(.gray)
                     )
                     

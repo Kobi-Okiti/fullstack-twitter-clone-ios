@@ -10,12 +10,19 @@ import SwiftUI
 struct SearchView: View {
     @State var text: String = ""
     @State var isEditing = false
+    
     var body: some View {
         VStack{
             SearchBar(text: $text, isEditing: $isEditing)
                 .padding(.horizontal)
-            List(0..<9){ i in
-                SearchCell(tag: "Helo", tweets: String(i))
+            if !isEditing {
+                List(0..<9){ i in
+                    SearchCell(tag: "Helo", tweets: String(i))
+                }
+            } else {
+                List(0..<9){ _ in
+                    SearchUserCell()
+                }
             }
         }
     }
