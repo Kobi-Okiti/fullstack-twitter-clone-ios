@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct SearchView: View {
+    @State var text: String = ""
+    @State var isEditing = false
     var body: some View {
-        Text("Search")
+        VStack{
+            SearchBar(text: $text, isEditing: $isEditing)
+                .padding(.horizontal)
+            List(0..<9){ i in
+                SearchCell(tag: "Helo", tweets: String(i))
+            }
+        }
     }
 }
 
