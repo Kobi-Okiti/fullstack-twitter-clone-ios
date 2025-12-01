@@ -16,11 +16,11 @@ struct SearchView: View {
             SearchBar(text: $text, isEditing: $isEditing)
                 .padding(.horizontal)
             if !isEditing {
-                List(0..<9){ i in
+                List(0..<12){ i in
                     SearchCell(tag: "Helo", tweets: String(i))
                 }
             } else {
-                List(0..<9){ _ in
+                List(0..<12){ _ in
                     SearchUserCell()
                 }
             }
