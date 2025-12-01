@@ -14,6 +14,7 @@ struct SearchView: View {
     var body: some View {
         VStack{
             SearchBar(text: $text, isEditing: $isEditing)
+                .padding(.vertical)
                 .padding(.horizontal)
             if !isEditing {
                 List(0..<12){ i in

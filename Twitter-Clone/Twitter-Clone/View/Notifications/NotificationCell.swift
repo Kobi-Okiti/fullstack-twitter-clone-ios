@@ -11,7 +11,7 @@ struct NotificationCell: View {
     
     @State var width = UIScreen.main.bounds.width
     var body: some View {
-        VStack{
+        VStack(spacing: 10){
             Rectangle()
                 .frame(width: width, height: 1, alignment: .center)
                 .foregroundColor(.gray)
