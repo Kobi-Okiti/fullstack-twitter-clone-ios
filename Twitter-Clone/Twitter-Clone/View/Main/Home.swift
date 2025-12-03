@@ -19,6 +19,7 @@ struct Home: View {
                 TabView(selection: $selectedIndex){
                     Feed()
                         .tag(0)
+                        .navigationBarHidden(true)
                         .tabItem {
                             Image("Home")
                                 .renderingMode(selectedIndex == 0 ? .template : .original)
@@ -26,6 +27,7 @@ struct Home: View {
                         }
                     SearchView()
                         .tag(1)
+                        .navigationBarHidden(true)
                         .tabItem {
                             Image("Search")
                                 .renderingMode(selectedIndex == 1 ? .template : .original)
@@ -33,6 +35,7 @@ struct Home: View {
                         }
                     NotificationsView()
                         .tag(2)
+                        .navigationBarHidden(true)
                         .tabItem {
                             Image("Notifications")
                                 .renderingMode(selectedIndex == 2 ? .template : .original)
@@ -40,6 +43,7 @@ struct Home: View {
                         }
                     MessagesView()
                         .tag(3)
+                        .navigationBarHidden(true)
                         .tabItem {
                             Image("Messages")
                                 .renderingMode(selectedIndex == 3 ? .template : .original)

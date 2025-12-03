@@ -133,6 +133,7 @@ struct SlideMenu: View {
                         
                         Spacer(minLength: 0)
                     })
+                    .padding(.vertical)
                     .opacity(!show ? 1 : 0)
                     .frame(height: !show ? nil : 0)
                 })
