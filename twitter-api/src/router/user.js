@@ -5,6 +5,8 @@ const User = require('../models/user');
 const router = new express.Router();
 
 // Endpoints
+
+// Create a new user
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
     try {
@@ -13,6 +15,17 @@ router.post('/users', async (req, res) => {
     }
     catch(e){
         res.status(400).send(e)
+    }
+})
+
+// Fetch the users
+router.get('/users',  async (req, res) =>{
+    try{
+        const users = await User.find({})
+        res.send(users)
+    }
+    catch(e){
+        res.status(500).send(e)
     }
 })
 
