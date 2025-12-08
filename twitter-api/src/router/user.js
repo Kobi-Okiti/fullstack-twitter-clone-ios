@@ -56,4 +56,21 @@ router.delete("/users/:id", async (req, res) => {
   }
 });
 
+// Fetch a single User by ID
+router.get("/users/:id", async (req, res) => {
+  try {
+    const _id = req.params.id;
+    const user = await User.findById(_id);
+
+    if (!user) {
+      return res.status(404).send();
+    }
+
+    res.send(user);
+    
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 module.exports = router;
