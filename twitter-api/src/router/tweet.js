@@ -74,7 +74,7 @@ router.get("/tweets/:id/image", async (req, res) => {
 });
 
 // Like a Tweet
-router.post('/tweets/:id/like', auth, async (req, res) => {
+router.put('/tweets/:id/like', auth, async (req, res) => {
     try{
         const tweet = await Tweet.findById(req.params.id)
         if(!tweet.likes.includes(req.user.id)){
@@ -82,11 +82,28 @@ router.post('/tweets/:id/like', auth, async (req, res) => {
             res.status(200).json('The post has been liked')
         }
         else{
-            return res.status(400).send({error: 'You have already liked this tweet'})
+            return res.status(403).json('You have already liked this tweet')
         }
     }
     catch (e) {
-        res.status(500).send(e);
+        res.status(500).json(e);
+    }
+});
+
+// Unlike a Tweet
+router.put('/tweets/:id/unlike', auth, async (req, res) => {
+    try{
+        const tweet = await Tweet.findById(req.params.id)
+        if(tweet.likes.includes(req.user.id)){
+            await tweet.updateOne({ $pull: { likes: req.user.id } })
+            res.status(200).json('The post has been unliked')
+        }
+        else{
+            return res.status(403).json('You have not liked this tweet')
+        }
+    }
+    catch (e) {
+        res.status(500).json(e);
     }
 });
 
