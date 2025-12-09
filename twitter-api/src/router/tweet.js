@@ -57,6 +57,22 @@ router.get('/tweets', async (req, res) => {
     }
 })
 
+// Fetch specific tweets
+router.get('/tweets/:id', async (req, res) => {
+    const _id = req.params.id;
+    try{
+        const tweets = await Tweet.find({user: _id});
+
+        if(!tweets){
+            return res.status(404).send();
+        }
+        
+        res.send(tweets);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+})
+
 // Fetch Tweet Image
 router.get("/tweets/:id/image", async (req, res) => {
   try {
