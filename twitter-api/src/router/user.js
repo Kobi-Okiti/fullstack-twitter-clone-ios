@@ -107,4 +107,65 @@ router.post(
   }
 );
 
+// Get User Profile Image
+
+router.get("/users/:id/avatar", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user || !user.avatar) {
+      throw new Error("The user or avatar does not exist");
+    }
+
+    res.set("Content-Type", "image/jpg");
+    res.send(user.avatar);
+  } catch (e) {
+    res.status(404).send(e);
+  }
+});
+
+// Route for following a user
+router.put('/users/:id/follow', auth, async (req, res) => {
+  if(req.user.id != req.params.id){
+    try{
+      const user = await User.findById(req.params.id)
+      if(!user.followers.includes(req.user.id)){
+        await user.updateOne({ $push: { followers: req.user.id } })
+        await req.user.updateOne({ $push: { followings: req.params.id } })
+        res.status(200).json("user has been followed")
+      } else{
+        res.status(403).json("you already follow this user")
+      }
+    }
+    catch(e){
+      res.status(500).json(e)
+    }
+  }
+  else{
+    res.status(403).json("you cannot follow yourself")
+  }
+})
+
+// Route for unfollowing a user
+router.put('/users/:id/unfollow', auth, async (req, res) => {
+  if(req.user.id != req.params.id){
+    try{
+      const user = await User.findById(req.params.id)
+      if(user.followers.includes(req.user.id)){
+        await user.updateOne({ $pull: { followers: req.user.id } })
+        await req.user.updateOne({ $pull: { followings: req.params.id } })
+        res.status(200).json("user has been unfollowed")
+      } else{
+        res.status(403).json("you don't follow this user")
+      }
+    }
+    catch(e){
+      res.status(500).json(e)
+    }
+  }
+  else{
+    res.status(403).json("you cannot unfollow yourself")
+  }
+})
+
 module.exports = router;
