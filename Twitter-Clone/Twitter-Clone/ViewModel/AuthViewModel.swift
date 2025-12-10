@@ -5,4 +5,18 @@
 //  Created by Oghenekobiruo Okiti on 10/12/2025.
 //
 
-import Foundation
+import SwiftUI
+
+class AuthViewModel: ObservableObject {
+    func login(){
+        
+    }
+    
+    func register(){
+        
+    }
+    
+    func logout(){
+        
+    }
+}
