@@ -15,6 +15,7 @@ class AuthViewModel: ObservableObject {
     init(){
         let defaults = UserDefaults.standard
         let token = defaults.object(forKey: "jsonwebtoken")
+
         if token != nil {
             isAuthenticated = true
             
@@ -27,6 +28,8 @@ class AuthViewModel: ObservableObject {
             isAuthenticated = false
         }
     }
+    
+    static let shared = AuthViewModel()
     
     func login(email: String, password: String){
         
