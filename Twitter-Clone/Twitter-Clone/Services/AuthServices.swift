@@ -75,7 +75,7 @@ public class AuthServices {
             guard let data = data else{
                 return
             }
-            
+            completion(.success(data))
             do{
                 if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]{
                     
@@ -94,34 +94,28 @@ public class AuthServices {
         let urlString = URL(string: "http://localhost:3000/users/\(id)")!
         
         var urlRequest = URLRequest(url: urlString)
-        
-        let session = URLSession.shared
-        
         urlRequest.httpMethod = "GET"
-        
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        let task = session.dataTask(with: urlRequest) { data, res, err in
-            guard let err = err else{
-                return
-            }
-            guard let data = data else{
-                return
+
+        URLSession.shared.dataTask(with: urlRequest) { data, res, err in
+            
+            // ❌ If there's an error, handle it
+            if let err = err {
+                print("Fetch user error:", err.localizedDescription)
                 completion(.failure(.invalidCredentials))
+                return
             }
             
+            // ❌ If data is missing, fail
+            guard let data = data else {
+                completion(.failure(.invalidCredentials))
+                return
+            }
+
+            // ✅ Success
             completion(.success(data))
             
-            do{
-                if let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]{
-                    
-                }
-                
-            } catch let err{
-                
-            }
-        }
-        task.resume()
+        }.resume()
     }
+
 }

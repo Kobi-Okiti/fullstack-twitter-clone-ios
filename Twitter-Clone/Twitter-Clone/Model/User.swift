@@ -12,18 +12,29 @@ struct ApiResponse: Decodable{
     var token: String
 }
 
-struct User: Decodable, Identifiable {
-    var _id: String
-    var id: String {
-        return _id
-    }
+struct User: Codable, Identifiable {
+    let id: String
     let username: String
     let name: String
     let email: String
     var location: String?
     var bio: String?
     var website: String?
-    var avatarExists: String?
+    var avatarExists: Bool?
     var followers: [String]
     var followings: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case username
+        case name
+        case email
+        case location
+        case bio
+        case website
+        case avatarExists
+        case followers
+        case followings
+    }
 }
+
