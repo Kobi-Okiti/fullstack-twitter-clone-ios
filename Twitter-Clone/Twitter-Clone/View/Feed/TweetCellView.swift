@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TweetCellView: View {
-    var tweet: String
-    var tweetImage: String?
+    
+    @ObservedObject var viewModel: TweetCellViewModel
+    
+    init(viewModel: TweetCellViewModel){
+        self.viewModel = viewModel
+    }
+    
+    
     var body: some View {
-        VStack(spacing: 0){
+        VStack(spacing: 15){
             HStack(alignment: .top, spacing: 10, content: {
                 Image("logo")
                     .resizable()
@@ -21,31 +28,31 @@ struct TweetCellView: View {
                 VStack(alignment: .leading, spacing: 10,
                        content: {
                     (
-                        Text("Travis ")
+                        Text("\(self.viewModel.tweet.username) ")
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
                         +
-                        Text("@oghenekobiruo")
+                        Text("@\(self.viewModel.tweet.username)")
                             .foregroundColor(.gray)
                     )
                     
-                    Text(tweet)
+                    Text(self.viewModel.tweet.text)
                         .frame(maxHeight: 100, alignment: .top)
                     
-                    if let image = tweetImage {
+                    if viewModel.tweet.image == "true"{
                         GeometryReader { proxy in
-                            Image(image)
+                            KFImage(URL(string: "http://localhost:3000/tweets/\(viewModel.tweet.id)/image"))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: proxy.frame(in: .global).width, height: 250)
                                 .cornerRadius(15)
                         }
                         .frame(height: 250)
-                        .padding(.bottom, 15)
                     }
                 })
+                Spacer()
             })
-//            Cell Bottom
+            //            Cell Bottom
             HStack(spacing: 50,content: {
                 Button(action: {
                     
@@ -79,9 +86,3 @@ struct TweetCellView: View {
         }
     }
 }
-
-#Preview {
-    TweetCellView(tweet: sampleText, tweetImage: "post")
-}
-
-var sampleText = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem ex commodi fuga consequuntur maiores dolorum, quam, temporibus possimus laudantium odio ut sit animi, numquam assumenda! Assumenda eum asperiores enim quae."

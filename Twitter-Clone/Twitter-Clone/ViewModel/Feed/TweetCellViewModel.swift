@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class TweeCellViewModel: ObservableObject {
+class TweetCellViewModel: ObservableObject {
     @Published var tweet: Tweet
     
     init(tweet: Tweet){
