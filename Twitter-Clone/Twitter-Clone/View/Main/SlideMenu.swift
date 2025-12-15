@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SlideMenu: View {
     
+    @ObservedObject var viewModel: AuthViewModel
+    
     @State var show = false
     var menuButtons = ["Profile", "Lists", "Topics", "Bookmarks", "Moments"]
     var edges = UIApplication.shared.windows.first?.safeAreaInsets
@@ -18,17 +20,21 @@ struct SlideMenu: View {
         VStack{
             HStack(spacing: 0, content: {
                 VStack(alignment: .leading, content: {
-                    Image("logo")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .clipShape(Circle())
+                    NavigationLink(destination: UserProfile(user: viewModel.currentUser!)){
+                        Image("logo")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .clipShape(Circle())
+                    }
                     HStack(alignment: .top, spacing: 12, content: {
                         VStack(alignment: .leading, spacing: 12, content: {
-                            Text("Cem")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                                .foregroundColor(.black)
-                            Text("@oghenekobiruo")
+                            NavigationLink(destination: UserProfile(user: viewModel.currentUser!)){
+                                Text(viewModel.currentUser!.name)
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.black)
+                            }
+                            Text("@\(viewModel.currentUser!.username)")
                                 .foregroundColor(.gray)
                             HStack(spacing: 20, content: {
                                 FollowView(count: 8, title: "Following")
@@ -53,7 +59,9 @@ struct SlideMenu: View {
                     })
                     VStack(alignment: .leading, content: {
                         ForEach(menuButtons, id:\.self) { item in
-                            MenuButton(title: item)
+                            NavigationLink(destination: UserProfile(user: viewModel.currentUser!)){
+                                MenuButton(title: item)
+                            }
                         }
                         
                         Divider()
@@ -150,6 +158,3 @@ struct SlideMenu: View {
     }
 }
 
-#Preview {
-    SlideMenu()
-}

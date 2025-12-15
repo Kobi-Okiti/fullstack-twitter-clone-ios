@@ -9,6 +9,7 @@ import SwiftUI
 
 struct UserProfile: View {
     
+    let user: User
     @State var offset: CGFloat = 0
     @State var titleOffset: CGFloat = 0
     @State var currentTab = "Tweets"
@@ -39,7 +40,7 @@ struct UserProfile: View {
                                 .opacity(blurViewOpacity())
                             
                             VStack(spacing: 5, content: {
-                                Text("Cem")
+                                Text(self.user.username)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
                                 Text("150 tweets")
@@ -86,12 +87,12 @@ struct UserProfile: View {
                     .padding(.bottom, -10)
                     
                     VStack(alignment: .leading, spacing: 8, content: {
-                        Text("Cem")
+                        Text(self.user.name)
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
                         
-                        Text("@oghenekobiruo")
+                        Text("@\(self.user.username)")
                             .foregroundColor(.gray)
                         
                         Text("Mehn we all do not know what we're doing, and we never will")
@@ -194,6 +195,3 @@ struct UserProfile: View {
     }
 }
 
-#Preview {
-    UserProfile()
-}
