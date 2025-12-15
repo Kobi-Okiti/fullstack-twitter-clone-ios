@@ -13,11 +13,13 @@ struct Home: View {
     @State var showCreateTweet = false
     @State var text = ""
     
+    let user : User
+    
     var body: some View {
         VStack {
             ZStack {
                 TabView(selection: $selectedIndex){
-                    Feed()
+                    Feed(user: user)
                         .tag(0)
                         .navigationBarHidden(true)
                         .tabItem {
@@ -78,6 +80,3 @@ struct Home: View {
     }
 }
 
-#Preview {
-    Home()
-}
