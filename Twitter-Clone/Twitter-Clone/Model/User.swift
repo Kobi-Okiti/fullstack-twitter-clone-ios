@@ -15,7 +15,7 @@ struct ApiResponse: Decodable{
 struct User: Codable, Identifiable {
     let id: String
     let username: String
-    let name: String
+    var name: String
     let email: String
     var location: String?
     var bio: String?

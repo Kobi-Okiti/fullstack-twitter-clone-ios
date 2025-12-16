@@ -13,10 +13,21 @@ struct EditProfileView: View {
     @State var profileImage: Image?
     @State var imagePickerPresented = false
     @State private var selectedImage: UIImage?
-    @State var name = ""
-    @State var location = ""
-    @State var bio = ""
-    @State var website = ""
+    
+    @Binding var user: User
+    
+    @State var name : String
+    @State var location : String
+    @State var bio : String
+    @State var website : String
+    
+    init(user: Binding<User>){
+        self._user = user
+        self._name = State(initialValue: self._user.name.wrappedValue ?? "")
+        self._location = State(initialValue: self._user.location.wrappedValue ?? "")
+        self._bio = State(initialValue: self._user.bio.wrappedValue ?? "")
+        self._website = State(initialValue: self._user.website.wrappedValue ?? "")
+    }
     
     var body: some View {
         VStack{
@@ -184,6 +195,3 @@ extension EditProfileView {
     }
 }
 
-#Preview {
-    EditProfileView()
-}
