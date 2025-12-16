@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct CustomProfileTextField: View {
+    
+    @Binding var message: String
+    var placeholder: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack{
+            ZStack {
+                HStack{
+                    if message.isEmpty{
+                        Text(placeholder)
+                            .foregroundColor(.gray)
+                    }
+                    Spacer()
+                }
+                TextField("", text: $message)
+                    .foregroundColor(.blue)
+            }
+        }
     }
-}
-
-#Preview {
-    CustomProfileTextField()
 }
