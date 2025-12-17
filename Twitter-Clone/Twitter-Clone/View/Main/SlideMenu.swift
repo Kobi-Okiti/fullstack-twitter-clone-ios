@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct SlideMenu: View {
     
@@ -21,7 +22,11 @@ struct SlideMenu: View {
             HStack(spacing: 0, content: {
                 VStack(alignment: .leading, content: {
                     NavigationLink(destination: UserProfile(user: viewModel.currentUser!)){
-                        Image("logo")
+                        KFImage(URL(string: "http://localhost:3000/users/\(self.viewModel.currentUser!.id)/avatar"))
+                            .placeholder({
+                                Image("blankpp")
+                                    .resizable()
+                            })
                             .resizable()
                             .frame(width: 60, height: 60)
                             .clipShape(Circle())
