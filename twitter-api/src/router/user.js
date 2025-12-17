@@ -169,7 +169,7 @@ router.put('/users/:id/unfollow', auth, async (req, res) => {
 })
 
 // Update a user info
-router.patch("/users/me", auth, async (req, res) => {
+router.patch("/users/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
 
   const allowedUpdates = ["name", "email", "password", "bio", "website", "location"];
