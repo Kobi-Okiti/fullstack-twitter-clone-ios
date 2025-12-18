@@ -15,6 +15,7 @@ class ProfileViewModel: ObservableObject {
         self.user = user
         fetchTweets()
         checkIfUserIsCurrentUser()
+        checkIfUserIsFollowed()
     }
     
     func fetchTweets(){
@@ -36,6 +37,36 @@ class ProfileViewModel: ObservableObject {
     func checkIfUserIsCurrentUser(){
         if (self.user.id == AuthViewModel.shared.currentUser?.id) {
             self.user.isCurrentUser = true
+        }
+    }
+    
+    func follow(){
+        RequestServices.requestDomain = "http://localhost:3000/users/\(self.user.id)/follow"
+        
+        RequestServices.followingProcess(id: self.user.id) { result in
+            print(result)
+            print("Followed")
+        }
+        self.user.isFollowed = true
+    }
+    
+    func unfollow(){
+        RequestServices.requestDomain = "http://localhost:3000/users/\(self.user.id)/unfollow"
+        
+        RequestServices.followingProcess(id: self.user.id) { result in
+            print(result)
+            print("/Unfollowed")
+        }
+        
+        self.user.isFollowed = false
+    }
+    
+    func checkIfUserIsFollowed(){
+        if(self.user.followers.contains(AuthViewModel.shared.currentUser!.id)){
+            self.user.isFollowed = true
+        }
+        else{
+            self.user.isFollowed = false
         }
     }
 }
