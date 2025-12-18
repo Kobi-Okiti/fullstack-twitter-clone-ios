@@ -13,6 +13,9 @@ struct UserProfile: View {
     let user: User
     
     @ObservedObject var viewModel: ProfileViewModel
+    var isCurrentUser: Bool {
+        return viewModel.user.isCurrentUser ?? false
+    }
     
     @State var editProfileShow = false
     
@@ -90,22 +93,41 @@ struct UserProfile: View {
                             .scaleEffect(getScale())
                         
                         Spacer()
-                        
-                        Button(action: {
-                            self.editProfileShow.toggle()
-                        }, label: {
-                            Text("Edit Profile")
-                                .foregroundColor(.blue)
-                                .padding(.vertical, 10)
-                                .padding(.horizontal)
-                                .background(Capsule().stroke(Color.blue, lineWidth: 1.5))
-                        })
-                        .sheet(isPresented: $editProfileShow) {
-                            
-                        } content: {
-                            EditProfileView(user: $viewModel.user)
-                        }
 
+                        if(self.isCurrentUser){
+                            Button(action: {
+                                self.editProfileShow.toggle()
+                            }, label: {
+                                Text("Edit Profile")
+                                    .foregroundColor(.blue)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal)
+                                    .background(Capsule().stroke(Color.blue, lineWidth: 1.5))
+                            })
+                            .sheet(isPresented: $editProfileShow) {
+                                
+                            } content: {
+                                EditProfileView(user: $viewModel.user)
+                            }
+                        }
+                        else{
+                            Button {
+                                
+                            } label: {
+                                Text("Follow")
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal)
+                                    .background(
+                                        ZStack {
+                                            Capsule()
+                                                .foregroundColor(.black)
+                                        }
+                                    )
+                            }
+
+                        }
+                        
                     }
                     .padding(.top, -25)
                     .padding(.bottom, -10)

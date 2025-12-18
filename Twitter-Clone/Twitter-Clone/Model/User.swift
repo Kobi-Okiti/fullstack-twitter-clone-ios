@@ -23,6 +23,7 @@ struct User: Codable, Identifiable {
     var avatarExists: Bool?
     var followers: [String]
     var followings: [String]
+    var isCurrentUser: Bool? = false
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
@@ -35,6 +36,7 @@ struct User: Codable, Identifiable {
         case avatarExists
         case followers
         case followings
+        case isCurrentUser
     }
 }
 
