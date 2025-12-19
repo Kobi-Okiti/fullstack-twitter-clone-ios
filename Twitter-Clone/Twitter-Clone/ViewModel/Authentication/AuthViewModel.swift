@@ -68,7 +68,7 @@ class AuthViewModel: ObservableObject {
     }
     
     func fetchUser(userId: String){
-        AuthServices.fetchUser() { result in
+        AuthServices.fetchUser(id: userId) { result in
             switch result{
                 case .success(let data):
                     guard let user = try? JSONDecoder().decode(User.self, from: data as! Data) else {return}

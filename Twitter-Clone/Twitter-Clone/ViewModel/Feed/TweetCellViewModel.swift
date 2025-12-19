@@ -22,7 +22,7 @@ class TweetCellViewModel: ObservableObject {
     func fetchUser(userId: String){
         AuthServices.requestDomain = "http://localhost:3000/users/\(userId)"
         
-        AuthServices.fetchUser() { res in
+        AuthServices.fetchUser(id: userId) { res in
             switch res {
             case .success(let data):
                 guard let user = try? JSONDecoder().decode(User.self, from: data as! Data) else {return}
