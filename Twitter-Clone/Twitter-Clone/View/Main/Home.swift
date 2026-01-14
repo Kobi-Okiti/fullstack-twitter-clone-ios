@@ -35,7 +35,7 @@ struct Home: View {
                                 .renderingMode(selectedIndex == 1 ? .template : .original)
                                 .foregroundColor(selectedIndex == 1 ? Color("bg") : .primary)
                         }
-                    NotificationsView()
+                    NotificationsView(user: user)
                         .tag(2)
                         .navigationBarHidden(true)
                         .tabItem {

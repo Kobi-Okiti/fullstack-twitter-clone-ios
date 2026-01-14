@@ -5,7 +5,7 @@ const auth = require("../middleware/auth");
 // New Router
 const router = new express.Router();
 
-router.post("/notification", auth, async (req, res) => {
+router.post("/notifications", auth, async (req, res) => {
   const notification = new Notification({
     ...req.body,
     user: req.user._id,
